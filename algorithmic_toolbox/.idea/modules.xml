@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/algorithmic_toolbox.iml" filepath="$PROJECT_DIR$/algorithmic_toolbox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data_structures1/data_structures1.iml" filepath="$PROJECT_DIR$/data_structures1/data_structures1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data_structures2/data_structures2.iml" filepath="$PROJECT_DIR$/data_structures2/data_structures2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data_structures3/data_structures3.iml" filepath="$PROJECT_DIR$/data_structures3/data_structures3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data_structures4/data_structures4.iml" filepath="$PROJECT_DIR$/data_structures4/data_structures4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/examples/examples.iml" filepath="$PROJECT_DIR$/examples/examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hm2/hm2.iml" filepath="$PROJECT_DIR$/hm2/hm2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hm3/hm3.iml" filepath="$PROJECT_DIR$/hm3/hm3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hm4/hm4.iml" filepath="$PROJECT_DIR$/hm4/hm4.iml" />
+    </modules>
+  </component>
+</project>

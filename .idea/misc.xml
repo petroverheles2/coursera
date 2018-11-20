@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleLocalSettings">
+    <option name="modificationStamps">
+      <map>
+        <entry key="$USER_HOME$/comergence/projects/cloudsearch-api" value="1491416219000" />
+        <entry key="$USER_HOME$/comergence/projects/gs-spring-boot-docker/initial" value="1478005958000" />
+        <entry key="$USER_HOME$/comergence/projects/realm5" value="7318473061000" />
+        <entry key="$USER_HOME$/comergence/projects/realm5-copy" value="7266008316000" />
+        <entry key="$USER_HOME$/comergence/projects/realm5-u" value="7402192466000" />
+        <entry key="$USER_HOME$/comergence/projects/sm-archive-api-client" value="1491299654000" />
+        <entry key="$USER_HOME$/comergence/projects/sm-archive-client" value="2982595658000" />
+        <entry key="$USER_HOME$/comergence/projects/spring-social-samples/spring-social-canvas" value="1472810788000" />
+        <entry key="$USER_HOME$/comergence/projects/spring-social-samples/spring-social-quickstart" value="1472810788000" />
+        <entry key="$USER_HOME$/comergence/projects/spring-social-samples/spring-social-showcase" value="1472810788000" />
+        <entry key="$USER_HOME$/comergence/sm-archive-api-generation/generated/java" value="2982612302000" />
+        <entry key="$USER_HOME$/java-tests/swagger-codegen-gradle-plugin-example" value="1491243976000" />
+        <entry key="$USER_HOME$/java-tests/swagger-codegen-gradle-plugin-example/build/swagger" value="2982495740000" />
+      </map>
+    </option>
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
