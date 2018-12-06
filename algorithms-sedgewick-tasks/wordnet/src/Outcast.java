@@ -2,6 +2,10 @@ public class Outcast {
     private WordNet wordNet;
 
     public Outcast(WordNet wordnet) {
+        if (wordnet == null) {
+            throw new IllegalArgumentException();
+        }
+
         this.wordNet = wordnet;
     }
 

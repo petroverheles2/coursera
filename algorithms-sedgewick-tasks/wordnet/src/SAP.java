@@ -6,10 +6,14 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class SAP {
 
-    private Digraph digraph;
+    private final Digraph digraph;
 
-    public SAP(Digraph G) {
-        this.digraph = new Digraph(G);
+    public SAP(Digraph digraph) {
+        if (digraph == null) {
+            throw new IllegalArgumentException();
+        }
+
+        this.digraph = new Digraph(digraph);
     }
 
     /** length of shortest ancestral path between v and w;
@@ -76,6 +80,10 @@ public class SAP {
      * @return
      */
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
+        if (v == null || w == null) {
+            throw new IllegalArgumentException();
+        }
+
         BreadthFirstDirectedPaths pathsV = new BreadthFirstDirectedPaths(digraph, v);
         BreadthFirstDirectedPaths pathsW = new BreadthFirstDirectedPaths(digraph, w);
         return length(pathsV, pathsW);
@@ -89,6 +97,10 @@ public class SAP {
      * @return
      */
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
+        if (v == null || w == null) {
+            throw new IllegalArgumentException();
+        }
+
         BreadthFirstDirectedPaths pathsV = new BreadthFirstDirectedPaths(digraph, v);
         BreadthFirstDirectedPaths pathsW = new BreadthFirstDirectedPaths(digraph, w);
         return anscestor(pathsV, pathsW);
@@ -116,4 +128,4 @@ public class SAP {
         return;
     }
 
-} // end class SAP
+}
