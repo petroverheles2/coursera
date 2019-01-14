@@ -1,8 +1,10 @@
 import edu.princeton.cs.algs4.Picture;
 
+import java.awt.*;
+
 public class SeamCarver {
 
-    private final Picture picture;
+    private Picture picture;
 
     // create a seam carver object based on the given picture
     public SeamCarver(Picture picture) {
@@ -37,13 +39,17 @@ public class SeamCarver {
             return 1000;
         }
 
-        int rx = picture.get(x - 1, y).getRed() - picture.get(x + 1, y).getRed();
-        int gx = picture.get(x - 1, y).getGreen() - picture.get(x + 1, y).getGreen();
-        int bx = picture.get(x - 1, y).getBlue() - picture.get(x + 1, y).getBlue();
+        Color colorOfXminusOne = picture.get(x - 1, y);
+        Color colorOfXPlusOne = picture.get(x + 1, y);
+        int rx = colorOfXminusOne.getRed() - colorOfXPlusOne.getRed();
+        int gx = colorOfXminusOne.getGreen() - colorOfXPlusOne.getGreen();
+        int bx = colorOfXminusOne.getBlue() - colorOfXPlusOne.getBlue();
 
-        int ry = picture.get(x, y - 1).getRed() - picture.get(x, y + 1).getRed();
-        int gy = picture.get(x, y - 1).getGreen() - picture.get(x, y + 1).getGreen();
-        int by = picture.get(x, y - 1).getBlue() - picture.get(x, y + 1).getBlue();
+        Color colorOfYMinusOne = picture.get(x, y - 1);
+        Color colorOfYPlusOne = picture.get(x, y + 1);
+        int ry = colorOfYMinusOne.getRed() - colorOfYPlusOne.getRed();
+        int gy = colorOfYMinusOne.getGreen() - colorOfYPlusOne.getGreen();
+        int by = colorOfYMinusOne.getBlue() - colorOfYPlusOne.getBlue();
 
         int deltaSqrX = rx * rx + gx * gx + bx * bx;
         int deltaSqrY = ry * ry + gy * gy + by * by;
@@ -53,6 +59,13 @@ public class SeamCarver {
 
     // sequence of indices for horizontal seam
     public int[] findHorizontalSeam() {
+        double[][] energies = new double[width()][height()];
+        for (int col = 0; col < width(); col++) {
+            for (int row = 0; row < height(); row++) {
+                energies[col][row] = energy(col, row);
+            }
+        }
+
         return null;
     }
 
@@ -79,6 +92,8 @@ public class SeamCarver {
                 updatedPicture.set(col, row - 1, picture.get(col, row));
             }
         }
+
+        picture = updatedPicture;
     }
 
     // remove vertical seam from current picture
@@ -99,5 +114,7 @@ public class SeamCarver {
                 updatedPicture.set(col - 1, row, picture.get(col, row));
             }
         }
+
+        picture = updatedPicture;
     }
 }
