@@ -7,13 +7,9 @@ import edu.princeton.cs.algs4.StdOut;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
-import static java.util.Arrays.asList;
 
 public class BaseballElimination {
 
@@ -60,9 +56,9 @@ public class BaseballElimination {
             String[] tokens = s.trim().split("\\s+");
             String teamName = tokens[0];
             teamNames[i] = teamName;
-            wins[i] = Integer.valueOf(tokens[1]);
-            losses[i] = Integer.valueOf(tokens[2]);
-            remainingGames[i] = Integer.valueOf(tokens[3]);
+            wins[i] = Integer.parseInt(tokens[1]);
+            losses[i] = Integer.parseInt(tokens[2]);
+            remainingGames[i] = Integer.parseInt(tokens[3]);
 
             for (int k = 0; k < teamsNumber; k++) {
                 remainingMatches[i][k] = Integer.valueOf(tokens[4 + k]);
@@ -73,8 +69,6 @@ public class BaseballElimination {
 
         isEliminated = new boolean[teamsNumber];
         eliminationCertificates = new Collection[teamsNumber];
-
-        Arrays.sort(teamNames);
 
         calculateElimination();
     }
@@ -172,17 +166,41 @@ public class BaseballElimination {
         }
     }
 
-    private int calculateTeamTwoByGamePairVertex(int pairVertex, int teamIndex) {
-        return 0;
+    private int calculateTeamOneByGamePairVertex(int gameVertex, int teamIndex) {
+        int v = 1;
+        for(int i = 0; i < teamsNumber; i++) {
+            for (int j = i + 1; j < teamsNumber; j++) {
+                if (i != teamIndex && j != teamIndex) {
+                    if (gameVertex == v) {
+                        return i;
+                    }
+                    v++;
+                }
+            }
+        }
+
+        throw new IllegalArgumentException("Cannot detect team one by game vertex " + gameVertex);
     }
 
-    private int calculateTeamOneByGamePairVertex(int pairVertex, int teamIndex) {
-        return 0;
+    private int calculateTeamTwoByGamePairVertex(int gameVertex, int teamIndex) {
+        int v = 1;
+        for(int i = 0; i < teamsNumber; i++) {
+            for (int j = i + 1; j < teamsNumber; j++) {
+                if (i != teamIndex && j != teamIndex) {
+                    if (gameVertex == v) {
+                        return j;
+                    }
+                    v++;
+                }
+            }
+        }
+
+        throw new IllegalArgumentException("Cannot detect team one by game vertex " + gameVertex);
     }
 
     // number of teams
     public int numberOfTeams() {
-        return numberOfTeams();
+        return teamsNumber;
     }
 
     // all teams
@@ -220,13 +238,13 @@ public class BaseballElimination {
     }
 
     private int getTeamIndex(String team) {
-        int index = Arrays.binarySearch(teamNames, team);
-
-        if (index == -1) {
-            throw new IllegalArgumentException("Unknown team " + team);
+        for (int i = 0; i < teamsNumber; i++) {
+            if (teamNames[i].equals(team)) {
+                return i;
+            }
         }
 
-        return index;
+        throw new IllegalArgumentException("Unknown team " + team);
     }
 
     public static void main(String[] args) {
