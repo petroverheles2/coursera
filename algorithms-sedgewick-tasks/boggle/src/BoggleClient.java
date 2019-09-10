@@ -8,11 +8,15 @@ public class BoggleClient {
         BoggleSolver solver = new BoggleSolver(dictionary);
         BoggleBoard board = new BoggleBoard(args[1]);
         int score = 0;
-        for (String word : solver.getAllValidWords(board)) {
+        long start = System.currentTimeMillis();
+        Iterable<String> allValidWords = solver.getAllValidWords(board);
+        long end = System.currentTimeMillis();
+        for (String word : allValidWords) {
             StdOut.println(word);
             score += solver.scoreOf(word);
         }
         StdOut.println("Score = " + score);
+        StdOut.println("Solved for " + (end - start) + " milliseconds");
     }
 
 }

@@ -1,13 +1,20 @@
+import edu.princeton.cs.algs4.TST;
+
 import java.util.*;
 
 public class BoggleSolver
 {
-    private Set<String> dictionaryWords = new HashSet<>();
+    //private Set<String> dictionaryWords = new HashSet<>();
+
+    private TST dictionaryWords = new TST();
 
     // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
     public BoggleSolver(String[] dictionary) {
-        dictionaryWords.addAll(Arrays.asList(dictionary));
+
+        for (String word : dictionary) {
+            dictionaryWords.put(word, word);
+        }
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
@@ -32,6 +39,11 @@ public class BoggleSolver
 
         if (wordPath.getWordLength() > 2) {
             String word = wordPath.getWord();
+
+            if (!dictionaryWords.keysWithPrefix(word).iterator().hasNext()) {
+                return;
+            }
+
             if (dictionaryWords.contains(word)) {
                 result.add(word);
             }
