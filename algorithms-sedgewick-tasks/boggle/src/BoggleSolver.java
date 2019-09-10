@@ -104,7 +104,11 @@ public class BoggleSolver
             visited = cloneVisited(wordPath.visited);
             wordBuilder = new StringBuilder(wordPath.wordBuilder);
             visited[row][col] = true;
-            wordBuilder.append(board.getLetter(row, col));
+            char letter = board.getLetter(row, col);
+            wordBuilder.append(letter);
+            if (letter == 'Q') {
+                wordBuilder.append('U');
+            }
         }
 
         public boolean containsCell(int row, int col) {
