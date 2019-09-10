@@ -2,23 +2,119 @@ import java.util.*;
 
 public class BoggleSolver
 {
-    private Set<String> words = new HashSet<>();
+    private Set<String> dictionaryWords = new HashSet<>();
 
     // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
     public BoggleSolver(String[] dictionary) {
-        words.addAll(Arrays.asList(dictionary));
+        dictionaryWords.addAll(Arrays.asList(dictionary));
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
     public Iterable<String> getAllValidWords(BoggleBoard board) {
-        boolean[][] visited = new boolean[board.rows()][board.cols()];
 
-        List<String> result = new ArrayList<>();
+        Set<String> result = new HashSet<>();
 
+        for (int row = 0; row < board.rows(); row++) {
+            for (int col = 0; col < board.cols(); col++) {
+                WordPath wordPath = new WordPath(board.rows(), board.cols());
+                explore(row, col, board, wordPath, result);
+            }
+        }
 
+        return result;
+    }
 
-        return new ArrayList<>();
+    private void explore(int row, int col, BoggleBoard board, WordPath wordPath, Set<String> result) {
+        if (wordPath.containsCell(row, col)) {
+            return;
+        }
+
+        if (wordPath.getWordLength() > 2) {
+            String word = wordPath.getWord();
+            if (dictionaryWords.contains(word)) {
+                result.add(word);
+            }
+        }
+
+        // explore bottom neighbour
+        if (row < board.rows() - 1) {
+            explore(row + 1, col, board, new WordPath(wordPath, board, row, col), result);
+        }
+
+        // explore top neighbour
+        if (row != 0) {
+            explore(row - 1, col, board, new WordPath(wordPath, board, row, col), result);
+        }
+
+        // explore right neighbour
+        if (col < board.cols() - 1) {
+            explore(row, col + 1, board, new WordPath(wordPath, board, row, col), result);
+        }
+
+        // explore left neighbour
+        if (col != 0) {
+            explore(row, col - 1, board, new WordPath(wordPath, board, row, col), result);
+        }
+
+        // explore bottom right neighbour
+        if (row < board.rows() - 1 && col < board.cols() - 1) {
+            explore(row + 1, col + 1, board, new WordPath(wordPath, board, row, col), result);
+        }
+
+        // explore top left neighbour
+        if (row != 0 && col != 0) {
+            explore(row - 1, col - 1, board, new WordPath(wordPath, board, row, col), result);
+        }
+
+        // explore bottom left neighbour
+        if (row < board.rows() - 1 && col != 0) {
+            explore(row + 1, col - 1, board, new WordPath(wordPath, board, row, col), result);
+        }
+
+        // explore top right neighbour
+        if (row != 0 && col < board.cols() - 1) {
+            explore(row - 1, col + 1, board, new WordPath(wordPath, board, row, col), result);
+        }
+
+    }
+
+    private class WordPath {
+        boolean[][] visited;
+        StringBuilder wordBuilder;
+
+        WordPath(int rows, int cols) {
+            visited = new boolean[rows][cols];
+            wordBuilder = new StringBuilder();
+        }
+
+        WordPath(WordPath wordPath, BoggleBoard board, int row, int col) {
+            visited = cloneVisited(wordPath.visited);
+            wordBuilder = new StringBuilder(wordPath.wordBuilder);
+            visited[row][col] = true;
+            wordBuilder.append(board.getLetter(row, col));
+        }
+
+        public boolean containsCell(int row, int col) {
+            return visited[row][col];
+        }
+
+        public String getWord() {
+            return wordBuilder.toString();
+        }
+
+        public int getWordLength() {
+            return wordBuilder.length();
+        }
+
+        private boolean[][] cloneVisited(boolean[][] src) {
+            int length = src.length;
+            boolean[][] target = new boolean[length][src[0].length];
+            for (int i = 0; i < length; i++) {
+                System.arraycopy(src[i], 0, target[i], 0, src[i].length);
+            }
+            return target;
+        }
     }
 
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
