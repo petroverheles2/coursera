@@ -11,10 +11,13 @@ public class BoggleClient {
         long start = System.currentTimeMillis();
         Iterable<String> allValidWords = solver.getAllValidWords(board);
         long end = System.currentTimeMillis();
+        int count = 0;
         for (String word : allValidWords) {
             StdOut.println(word);
             score += solver.scoreOf(word);
+            count++;
         }
+        StdOut.println("All valid words count: " + count);
         StdOut.println("Score = " + score);
         StdOut.println("Solved for " + (end - start) + " milliseconds");
     }

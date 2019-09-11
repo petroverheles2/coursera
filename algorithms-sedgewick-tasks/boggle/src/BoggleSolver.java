@@ -1,19 +1,18 @@
 import edu.princeton.cs.algs4.TST;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BoggleSolver
 {
-    //private Set<String> dictionaryWords = new HashSet<>();
 
-    private TST dictionaryWords = new TST();
+    private final TST<Boolean> dictionaryWords = new TST<>();
 
     // Initializes the data structure using the given array of strings as the dictionary.
     // (You can assume each word in the dictionary contains only the uppercase letters A through Z.)
     public BoggleSolver(String[] dictionary) {
-
         for (String word : dictionary) {
-            dictionaryWords.put(word, word);
+            dictionaryWords.put(word, true);
         }
     }
 
@@ -50,50 +49,81 @@ public class BoggleSolver
         }
 
         // explore bottom neighbour
+        WordPath newWordPath = new WordPath(wordPath, board, row, col);
+
         if (row < board.rows() - 1) {
-            explore(row + 1, col, board, new WordPath(wordPath, board, row, col), result);
+            explore(row + 1, col, board, newWordPath, result);
         }
 
         // explore top neighbour
         if (row != 0) {
-            explore(row - 1, col, board, new WordPath(wordPath, board, row, col), result);
+            explore(row - 1, col, board, newWordPath, result);
         }
 
         // explore right neighbour
         if (col < board.cols() - 1) {
-            explore(row, col + 1, board, new WordPath(wordPath, board, row, col), result);
+            explore(row, col + 1, board, newWordPath, result);
         }
 
         // explore left neighbour
         if (col != 0) {
-            explore(row, col - 1, board, new WordPath(wordPath, board, row, col), result);
+            explore(row, col - 1, board, newWordPath, result);
         }
 
         // explore bottom right neighbour
         if (row < board.rows() - 1 && col < board.cols() - 1) {
-            explore(row + 1, col + 1, board, new WordPath(wordPath, board, row, col), result);
+            explore(row + 1, col + 1, board, newWordPath, result);
         }
 
         // explore top left neighbour
         if (row != 0 && col != 0) {
-            explore(row - 1, col - 1, board, new WordPath(wordPath, board, row, col), result);
+            explore(row - 1, col - 1, board, newWordPath, result);
         }
 
         // explore bottom left neighbour
         if (row < board.rows() - 1 && col != 0) {
-            explore(row + 1, col - 1, board, new WordPath(wordPath, board, row, col), result);
+            explore(row + 1, col - 1, board, newWordPath, result);
         }
 
         // explore top right neighbour
         if (row != 0 && col < board.cols() - 1) {
-            explore(row - 1, col + 1, board, new WordPath(wordPath, board, row, col), result);
+            explore(row - 1, col + 1, board, newWordPath, result);
+        }
+
+        // don't forget to check the word if we're stuck on boundary
+        String newWord = newWordPath.getWord();
+        if (newWord.length() > 2 && dictionaryWords.contains(newWord)) {
+            result.add(newWord);
         }
 
     }
 
-    private class WordPath {
-        boolean[][] visited;
-        StringBuilder wordBuilder;
+    // Returns the score of the given word if it is in the dictionary, zero otherwise.
+    // (You can assume the word contains only the uppercase letters A through Z.)
+    public int scoreOf(String word) {
+        int length = word.length();
+
+        if (word.length() < 3) {
+            return 0;
+        }
+
+        if (!dictionaryWords.contains(word)) {
+            return 0;
+        }
+
+        switch (length) {
+            case 3:
+            case 4: return 1;
+            case 5: return 2;
+            case 6: return 3;
+            case 7: return 5;
+            default: return 11;
+        }
+    }
+
+    private static class WordPath {
+        private final boolean[][] visited;
+        private final StringBuilder wordBuilder;
 
         WordPath(int rows, int cols) {
             visited = new boolean[rows][cols];
@@ -111,15 +141,15 @@ public class BoggleSolver
             }
         }
 
-        public boolean containsCell(int row, int col) {
+        boolean containsCell(int row, int col) {
             return visited[row][col];
         }
 
-        public String getWord() {
+        String getWord() {
             return wordBuilder.toString();
         }
 
-        public int getWordLength() {
+        int getWordLength() {
             return wordBuilder.length();
         }
 
@@ -130,25 +160,6 @@ public class BoggleSolver
                 System.arraycopy(src[i], 0, target[i], 0, src[i].length);
             }
             return target;
-        }
-    }
-
-    // Returns the score of the given word if it is in the dictionary, zero otherwise.
-    // (You can assume the word contains only the uppercase letters A through Z.)
-    public int scoreOf(String word) {
-        int length = word.length();
-
-        if (word.length() < 3) {
-            return 0;
-        }
-
-        switch (length) {
-            case 3:
-            case 4: return 1;
-            case 5: return 2;
-            case 6: return 3;
-            case 7: return 5;
-            default: return 11;
         }
     }
 }
