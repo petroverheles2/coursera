@@ -1,47 +1,61 @@
 import edu.princeton.cs.algs4.BinaryStdIn;
-import sun.nio.cs.US_ASCII;
-
-import java.nio.charset.Charset;
-import java.util.Arrays;
+import edu.princeton.cs.algs4.BinaryStdOut;
 
 public class MoveToFront {
 
     // apply move-to-front encoding, reading from standard input and writing to standard output
     public static void encode() {
-        int[] alphabet = new int[96];
-        for (int i = 0; i < alphabet.length; i++) {
-            alphabet[i] = i;
-        }
+        byte[] alphabet = createAlphabet();
 
-        //String s = BinaryStdIn.readString();
-        String s = "qwerty";
+        String s = BinaryStdIn.readString();
         char[] input = s.toCharArray();
 
-        int[] output = new int[input.length];
-
-        for (int i = 0; i < output.length; i++) {
-            int code = input[i] - 32;
+        for (int i = 0; i < input.length; i++) {
+            byte index = 0;
             for (int k = 0; k < alphabet.length; k++) {
-                if (code == alphabet[k]) {
-                    output[i] = k;
+                if (input[i] == alphabet[k]) {
+                    index = (byte)k;
+                    BinaryStdOut.write(index);
                     break;
                 }
             }
 
-            int movedCode = output[i];
-            for (int n = i; n > 0; n--) {
-                alphabet[n] = alphabet[n - 1];
-            }
-            alphabet[0] = movedCode;
+            moveElementToFront(alphabet, index);
         }
 
-        System.out.println(Arrays.toString(output));
+        BinaryStdIn.close();
+        BinaryStdOut.close();
     }
-
 
     // apply move-to-front decoding, reading from standard input and writing to standard output
     public static void decode() {
+        byte[] alphabet = createAlphabet();
 
+        do {
+            int index = BinaryStdIn.readByte();
+            BinaryStdOut.write(alphabet[index]);
+            moveElementToFront(alphabet, index);
+        } while (!BinaryStdIn.isEmpty());
+
+        BinaryStdIn.close();
+        BinaryStdOut.close();
+    }
+
+    private static byte[] createAlphabet() {
+        byte[] alphabet = new byte[256];
+        for (int i = 0; i < alphabet.length; i++) {
+            alphabet[i] = (byte)i;
+        }
+        return alphabet;
+    }
+
+    private static void moveElementToFront(byte[] arr,
+                                           int index) {
+        byte code = arr[index];
+        for (int n = index; n > 0; n--) {
+            arr[n] = arr[n - 1];
+        }
+        arr[0] = code;
     }
 
     // if args[0] is "-", apply move-to-front encoding
