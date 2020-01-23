@@ -1,11 +1,10 @@
-import static java.util.Arrays.binarySearch;
-
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class CircularSuffixArray {
 
-    private String s;
-    private int[] index;
+    private final String s;
+    private final int[] index;
 
     // circular suffix array of s
     public CircularSuffixArray(String s) {
@@ -16,18 +15,21 @@ public class CircularSuffixArray {
         this.s = s;
         this.index = new int[length()];
 
+        if (s.isEmpty()) {
+            return;
+        }
+
         String[] suffixes = new String[s.length()];
-        suffixes[0] = s;
+        suffixes[0] = s + 0;
         for (int i = 1; i < length(); i++) {
-            suffixes[i] = suffixes[i - 1].substring(1) + suffixes[i - 1].charAt(0);
+            suffixes[i] = suffixes[i - 1].substring(1, length()) + suffixes[i - 1].charAt(0) + i;
         }
         String[] sortedSuffixes = Arrays.copyOf(suffixes, suffixes.length);
 
-        Arrays.sort(sortedSuffixes);
+        Arrays.sort(sortedSuffixes, Comparator.comparing(suff -> suff.substring(0, length())));
 
-        for (int i = 0; i < suffixes.length; i++) {
-            int sortedIndex = binarySearch(sortedSuffixes, suffixes[i]);
-            index[sortedIndex] = i;
+        for (int i = 0; i < sortedSuffixes.length; i++) {
+            index[i] = Integer.parseInt(sortedSuffixes[i].substring(length()));
         }
     }
 

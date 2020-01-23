@@ -1,20 +1,25 @@
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MoveToFront {
 
     // apply move-to-front encoding, reading from standard input and writing to standard output
     public static void encode() {
         byte[] alphabet = createAlphabet();
 
-        String s = BinaryStdIn.readString();
-        char[] input = s.toCharArray();
+        List<Byte> bytes = new ArrayList<>();
+        while (!BinaryStdIn.isEmpty()) {
+            bytes.add(BinaryStdIn.readByte());
+        }
 
-        for (int i = 0; i < input.length; i++) {
+        for (int i = 0; i < bytes.size(); i++) {
             byte index = 0;
             for (int k = 0; k < alphabet.length; k++) {
-                if (input[i] == alphabet[k]) {
-                    index = (byte)k;
+                if (bytes.get(i) == alphabet[k]) {
+                    index = (byte) k;
                     BinaryStdOut.write(index);
                     break;
                 }
@@ -44,7 +49,7 @@ public class MoveToFront {
     private static byte[] createAlphabet() {
         byte[] alphabet = new byte[256];
         for (int i = 0; i < alphabet.length; i++) {
-            alphabet[i] = (byte)i;
+            alphabet[i] = (byte) i;
         }
         return alphabet;
     }

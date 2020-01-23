@@ -5,6 +5,8 @@ import java.util.Arrays;
 
 public class BurrowsWheeler {
 
+    private static final int ASCII_CODES_NUMBER = 256;
+
     // apply Burrows-Wheeler transform,
     // reading from standard input and writing to standard output
     public static void transform() {
@@ -32,7 +34,7 @@ public class BurrowsWheeler {
     // apply Burrows-Wheeler inverse transform,
     // reading from standard input and writing to standard output
     public static void inverseTransform() {
-        int first = BinaryStdIn.readInt();
+        BinaryStdIn.readInt();
 
         // reading input and reconstructing first and last column of sorted circular suffixes table
         String s = BinaryStdIn.readString();
@@ -40,7 +42,7 @@ public class BurrowsWheeler {
         char[] firstColumn = sortByCount(Arrays.copyOf(lastColumn, lastColumn.length));
 
         // detecting start indexes of same char sequences in the first (sorted) column
-        int[] starts = new int[256];
+        int[] starts = new int[ASCII_CODES_NUMBER];
         char nextChar = firstColumn[0];
         starts[nextChar] = 0;
         for (int i = 1; i < firstColumn.length; i++) {
@@ -54,7 +56,7 @@ public class BurrowsWheeler {
 
         // constructing next array
         int[] next = new int[lastColumn.length];
-        int[] counts = new int[256];
+        int[] counts = new int[ASCII_CODES_NUMBER];
         for (int i = 0; i < lastColumn.length; i++) {
             next[starts[lastColumn[i]] + counts[lastColumn[i]]] = i;
             counts[lastColumn[i]]++;
@@ -76,7 +78,7 @@ public class BurrowsWheeler {
 
     private static char[] sortByCount(char[] t) {
         char[] tSorted = new char[t.length];
-        int[] count = new int[256];
+        int[] count = new int[ASCII_CODES_NUMBER];
 
         for (int i = 0; i < t.length; i++) {
             count[t[i]] = count[t[i]] + 1;
